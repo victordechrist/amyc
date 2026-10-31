@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 98%;
+    --foreground: 224 71.4% 4.1%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+
+    --primary: 222 89% 23%; /* Deep Blue #072a6b */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 215 28% 90%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 215 28% 95%;
+    --muted-foreground: 215 16% 40%; /* WCAG AA high contrast text for muted foreground */
+
+    --accent: 192 100% 28%; /* Darker teal/cyan #00728f yielding > 5.5:1 contrast against white text for WCAG AA compliance */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 90%;
+    --input: 214.3 31.8% 90%;
+    --ring: 192 100% 28%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 224 85% 6%; /* Rich dark navy #020712 */
+    --foreground: 210 40% 98%;
+
+    --card: 224 75% 9%; /* Deep card background #071022 */
+    --card-foreground: 210 40% 98%;
+
+    --popover: 224 75% 9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 217 91% 60%; /* Vibrant electric blue for dark mode visibility */
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 223 47% 16%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 223 47% 14%;
+    --muted-foreground: 215 20.2% 70%;
+
+    --accent: 187 100% 48%; /* Bright Cyan on dark bg */
+    --accent-foreground: 224 85% 6%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 223 35% 18%;
+    --input: 223 35% 18%;
+    --ring: 187 100% 48%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-background font-sans text-foreground antialiased selection:bg-accent/30 selection:text-foreground;
+  }
+
+  /* Global focus-visible accessibility ring styling */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-background;
+  }
+}
+
+/* Accessibility skip-link style */
+.skip-to-content {
+  @apply sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:font-semibold focus:text-accent-foreground focus:shadow-lg;
+}
