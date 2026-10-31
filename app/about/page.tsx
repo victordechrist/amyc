@@ -1,8 +1,10 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
-import { ABOUT_CONTENT, TEAM_MEMBERS } from "@/lib/data/about";
-import { Users, Target, Heart, CheckCircle } from "lucide-react";
+import { ABOUT_CONTENT } from "@/lib/data/about";
+import { TEAM_MEMBERS } from "@/data/team";
+import { Target, Heart, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us | Adaobi Muonago Youth Center",
@@ -83,7 +85,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      {/* Team Placeholders */}
+      {/* Team Section */}
       <Section padding="none">
         <div className="mb-8">
           <SectionHeading
@@ -93,30 +95,34 @@ export default function AboutPage() {
           />
         </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {TEAM_MEMBERS.map((member) => (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {TEAM_MEMBERS.map((member, index) => (
             <div
-              key={member.id}
-              className="flex flex-col justify-between rounded-xl border border-border bg-card p-6 text-center shadow-sm"
+              key={member.name}
+              className={`flex flex-col overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md ${
+                index === 4
+                  ? "sm:col-span-2 sm:mx-auto sm:w-1/2 lg:col-span-1 lg:mx-0 lg:w-full"
+                  : ""
+              }`}
             >
-              <div>
-                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 font-heading text-xl font-bold text-primary dark:bg-accent/20 dark:text-accent">
-                  <Users className="h-8 w-8" />
-                </div>
-                <h4 className="font-heading text-base font-bold text-foreground">
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-muted">
+                <Image
+                  src={member.image}
+                  alt={member.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  className="object-cover"
+                  style={{ objectPosition: member.objectPosition || "center 20%" }}
+                  loading="lazy"
+                />
+              </div>
+              <div className="flex flex-1 flex-col justify-center p-5 text-center">
+                <h4 className="font-heading text-lg font-bold text-foreground">
                   {member.name}
                 </h4>
-                <p className="mt-0.5 text-xs font-medium text-accent">
+                <p className="mt-1 text-sm font-medium text-accent">
                   {member.title}
                 </p>
-                <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
-                  {member.bio}
-                </p>
-              </div>
-              <div className="mt-4 border-t border-border/60 pt-3">
-                <span className="inline-block rounded-full bg-muted px-2.5 py-0.5 text-[10px] font-semibold text-muted-foreground">
-                  {member.roleType}
-                </span>
               </div>
             </div>
           ))}

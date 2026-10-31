@@ -33,6 +33,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Adaobi Muonago Youth Center" }],
   creator: "Adaobi Muonago Youth Center",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/images/logo/icon-16x16.png", sizes: "16x16", type: "image/png" },
+      { url: "/images/logo/icon-32x32.png", sizes: "32x32", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -41,12 +51,21 @@ export const metadata: Metadata = {
     description:
       "Empowering youth through market-driven tech skills, industry certifications, and hands-on project learning.",
     siteName: "Adaobi Muonago Youth Center (AMYC)",
+    images: [
+      {
+        url: "/images/logo/amyc-logo-full@2x.png",
+        width: 1200,
+        height: 965,
+        alt: "Adaobi Muonago Youth Center (AMYC) logo",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Adaobi Muonago Youth Center (AMYC)",
     description:
       "Empowering youth through market-driven tech skills and industry certifications.",
+    images: ["/images/logo/amyc-logo-full@2x.png"],
   },
 };
 

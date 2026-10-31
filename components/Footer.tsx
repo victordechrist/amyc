@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import { SKILL_TRACKS, FOOTER_NAV_LINKS, SOCIAL_LINKS } from "@/lib/data";
-import { Code2, Send, CheckCircle2, AlertCircle } from "lucide-react";
+import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -32,19 +33,17 @@ export function Footer() {
           <div className="space-y-4 lg:col-span-2">
             <Link
               href="/"
-              className="inline-flex items-center space-x-2.5 font-heading text-lg font-bold tracking-tight text-white transition-opacity hover:opacity-90"
+              className="inline-flex items-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
               aria-label="Adaobi Muonago Youth Center Home"
             >
-              <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary font-black text-primary-foreground shadow-sm">
-                <Code2 className="h-5 w-5 text-accent" aria-hidden="true" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-extrabold leading-tight text-white">
-                  AMYC
-                </span>
-                <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
-                  Adaobi Muonago Youth Center
-                </span>
+              <div className="relative h-14 w-auto overflow-hidden rounded-md bg-[#0f2851] p-1.5 shadow-sm">
+                <Image
+                  src="/images/logo/amyc-logo-full.png"
+                  alt="Adaobi Muonago Youth Center (AMYC) logo"
+                  width={150}
+                  height={44}
+                  className="h-full w-auto object-contain"
+                />
               </div>
             </Link>
             <p className="max-w-sm text-sm leading-relaxed text-slate-400">

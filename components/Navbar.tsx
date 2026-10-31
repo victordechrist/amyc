@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Image from "next/image";
 import { SKILL_TRACKS, MAIN_NAV_LINKS } from "@/lib/data";
 import {
-  Code2,
   ChevronDown,
   Menu,
   X,
@@ -124,19 +124,18 @@ export function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className="flex items-center space-x-2.5 font-heading text-lg font-bold tracking-tight transition-opacity hover:opacity-90"
+          className="flex items-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
           aria-label="Adaobi Muonago Youth Center Home"
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary font-black text-primary-foreground shadow-sm">
-            <Code2 className="h-5 w-5 text-accent" aria-hidden="true" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-extrabold leading-tight text-foreground">
-              AMYC
-            </span>
-            <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">
-              Youth Tech Center
-            </span>
+          <div className="relative h-11 w-auto overflow-hidden rounded-md bg-[#0f2851] p-1 shadow-sm">
+            <Image
+              src="/images/logo/amyc-logo-full.png"
+              alt="Adaobi Muonago Youth Center (AMYC) logo"
+              width={132}
+              height={36}
+              className="h-full w-auto object-contain"
+              priority
+            />
           </div>
         </Link>
 
