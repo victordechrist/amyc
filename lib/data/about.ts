@@ -1,13 +1,3 @@
-export interface TeamMember {
-  id: string;
-  name: string;
-  title: string;
-  bio: string;
-  roleType: "Leadership" | "Instructor" | "Advisor";
-  linkedInUrl?: string;
-  githubUrl?: string;
-}
-
 export interface CoreValue {
   title: string;
   description: string;
@@ -43,34 +33,3 @@ export const ABOUT_CONTENT = {
     },
   ] as CoreValue[],
 };
-
-export const TEAM_MEMBERS: TeamMember[] = [
-  {
-    id: "1",
-    name: "Engr. Obed Muonago",
-    title: "Executive Director & Founder",
-    bio: "Passionate educator and tech advocate with 15+ years of experience in higher education and non-profit youth development.",
-    roleType: "Leadership",
-  },
-  {
-    id: "2",
-    name: "Dr. Obed jnr Muonago",
-    title: "Head of Technical Curriculum",
-    bio: "Former Senior Cloud Solutions Architect committed to designing practical, hands-on learning experiences for students.",
-    roleType: "Leadership",
-  },
-  {
-    id: "3",
-    name: "Dara Muonago",
-    title: "Mentorship Program Lead",
-    bio: "Specializes in building industry mentorship pipelines and professional readiness workshops.",
-    roleType: "Leadership",
-  },
-  {
-    id: "4",
-    name: "Dr.-Ing Chukwuka Victor Obionwu",
-    title: "Tech Lead & Curiliculum Developer",
-    bio: "Certified Information Systems Security Professional with 8 years of enterprise security experience.",
-    roleType: "Instructor",
-  },
-];
