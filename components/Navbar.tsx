@@ -283,7 +283,9 @@ export function Navbar() {
                 size="sm"
                 className="font-semibold shadow-sm"
               >
-                <Link href="/get-involved">Start Your Journey</Link>
+                <Link href="/sign-in?callbackUrl=%2Fget-involved">
+                  Start Your Journey
+                </Link>
               </Button>
             </>
           )}
@@ -466,7 +468,7 @@ export function Navbar() {
                     className="w-full gap-2 font-semibold shadow-md"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Link href="/get-involved">
+                    <Link href="/sign-in?callbackUrl=%2Fget-involved">
                       <Sparkles className="h-4 w-4" aria-hidden="true" />
                       Start Your Journey
                     </Link>

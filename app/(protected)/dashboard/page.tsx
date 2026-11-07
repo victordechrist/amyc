@@ -16,7 +16,6 @@ import {
   BookOpen,
   GraduationCap,
   FolderKanban,
-  Trophy,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -42,12 +41,6 @@ const QUICK_LINKS = [
     description: "Browse student projects and portfolio work.",
     href: "/showcase",
     icon: FolderKanban,
-  },
-  {
-    title: "Learning Resources",
-    description: "Toolkits, guides, and cheatsheets to accelerate learning.",
-    href: "/resources",
-    icon: Trophy,
   },
 ];
 
