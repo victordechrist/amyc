@@ -10,16 +10,16 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <Link
           href="/"
-          className="flex items-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
+          className="flex items-center gap-3 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
           aria-label="Adaobi Muonago Youth Center Home"
         >
-          <div className="relative h-11 w-auto overflow-hidden rounded-md bg-[#0f2851] p-1 shadow-sm">
+          <div className="relative h-11 w-11 overflow-hidden rounded-full shadow-sm">
             <Image
               src="/images/logo/amyc-logo-full.png"
               alt="Adaobi Muonago Youth Center (AMYC) logo"
-              width={132}
-              height={36}
-              className="h-full w-auto object-contain"
+              width={44}
+              height={44}
+              className="h-full w-full object-contain"
               priority
             />
           </div>

@@ -55,7 +55,7 @@ export const metadata: Metadata = {
       {
         url: "/images/logo/amyc-logo-full@2x.png",
         width: 1200,
-        height: 965,
+        height: 1200,
         alt: "Adaobi Muonago Youth Center (AMYC) logo",
       },
     ],
@@ -87,7 +87,7 @@ const jsonLd = {
       name: "Adaobi Muonago Youth Center",
       alternateName: "AMYC",
       url: siteUrl,
-      logo: `${siteUrl}/favicon.ico`,
+      logo: `${siteUrl}/images/logo/amyc-logo-full@2x.png`,
       description:
         "Non-profit youth center offering free/subsidized hands-on technical education, certification preparation, and mentorship in tech skills.",
       sameAs: [
