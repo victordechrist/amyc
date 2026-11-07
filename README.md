@@ -111,6 +111,54 @@ All site content (text, statistics, testimonials, track curricula, and program s
 
 ---
 
+## Authentication
+
+AMYC uses **Auth.js (NextAuth v5)** with the **Prisma adapter** and **PostgreSQL (Neon)** for student accounts. Marketing pages stay public; `/dashboard` and `/account` require a session.
+
+### Architecture
+
+- `auth.ts` — Auth.js configuration (Credentials provider, JWT sessions, Prisma adapter).
+- `app/api/auth/[...nextauth]/route.ts` — Auth.js endpoints (`/api/auth/session`, `/api/auth/signin`, etc.).
+- `app/api/auth/register/route.ts` — student self-registration (bcrypt-hashed passwords, `role: STUDENT`).
+- `app/(protected)/` — route group whose layout redirects anonymous users to `/sign-in`.
+- `lib/auth-throttle.ts` — DB-backed rate limiting (5 failed sign-ins per 15 min per email; 10 registrations per hour per IP).
+- `lib/password.ts` / `lib/validation.ts` — password policy and registration schema with friendly error messages.
+
+### Environment Variables
+
+Copy `.env.example` to `.env.local` and fill in the values (see `.env.example` for details):
+
+| Variable | Purpose |
+| :--- | :--- |
+| `AUTH_SECRET` | Session signing secret (`openssl rand -base64 32`). |
+| `DATABASE_URL` | Neon **pooler** connection string (runtime queries). |
+| `DIRECT_URL` | Neon **unpooled** connection string (`prisma migrate`). |
+| `NEXT_PUBLIC_SITE_URL` | Public site URL. |
+| `AUTH_TRUST_HOST` | Set to `true` only for non-Vercel hosts. |
+
+### Database Migrations
+
+```bash
+npx prisma migrate dev --name <change>   # local development
+npx prisma migrate deploy                # production (e.g. in CI/Vercel build)
+```
+
+### Roles
+
+`STUDENT` accounts are self-service via `/sign-up`. `MENTOR`, `PARTNER`, `DONOR`, and `ADMIN` accounts are provisioned manually in the database. Role labels are centralized in `lib/roles.ts`.
+
+### Tests
+
+```bash
+npm test    # vitest unit tests (password policy, validation, roles)
+```
+
+### Roadmap
+
+Email verification, password reset, OAuth providers, and richer portal features (progress tracking, mentor scheduling) are planned next.
+
+---
+
 ## Deployment on Vercel
 
 This repository is optimized for zero-manual-config deployment on [Vercel](https://vercel.com).
@@ -152,6 +200,6 @@ This repository is optimized for zero-manual-config deployment on [Vercel](https
 ## Future Roadmap
 
 - 📩 **Backend Form Integration**: Connect `ContactForm` and `InterestForm` stubs to email sending services (e.g., Resend or SendGrid API) or Webhook destinations.
-- 🔐 **Authentication & Student Portal**: Implement Auth.js / Clerk authentication for student assignment submissions, attendance tracking, and mentor scheduling.
+- 🔐 **Student Portal Features**: Auth foundation shipped (Auth.js + Prisma + Neon). Next: email verification, password reset, progress tracking, and mentor scheduling.
 - 📊 **Headless CMS Integration**: Optional integration with Sanity.io or Payload CMS to give non-technical administrators a rich visual editor for `lib/data/` modules.
 - 🗄️ **Database Integration**: Connect a PostgreSQL database (via Prisma or Supabase) for applicant pipeline management and real-time impact tracking.
