@@ -1,15 +1,32 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-
-const registerSchema = z.object({
-  name: z.string().trim().min(1).max(100),
-  email: z.string().trim().toLowerCase().pipe(z.email()),
-  password: z.string().min(8).max(128),
-});
+import { registerSchema, formatRegisterError } from "@/lib/validation";
+import {
+  isThrottled,
+  recordAttempt,
+  registerThrottle,
+} from "@/lib/auth-throttle";
 
 export async function POST(request: Request) {
+  const ip =
+    request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
+  const throttleKey = `register:${ip}`;
+
+  if (
+    await isThrottled(
+      throttleKey,
+      registerThrottle.limit,
+      registerThrottle.windowMinutes,
+    )
+  ) {
+    return NextResponse.json(
+      { ok: false, error: "Too many attempts. Please try again later." },
+      { status: 429 },
+    );
+  }
+  await recordAttempt(throttleKey);
+
   let body: unknown;
   try {
     body = await request.json();
@@ -23,12 +40,7 @@ export async function POST(request: Request) {
   const parsed = registerSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      {
-        ok: false,
-        error:
-          parsed.error.issues[0]?.message ??
-          "Please check your details and try again.",
-      },
+      { ok: false, error: formatRegisterError(parsed.error) },
       { status: 400 },
     );
   }

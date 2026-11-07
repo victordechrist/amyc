@@ -4,6 +4,12 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import {
+  clearAttempts,
+  isThrottled,
+  recordAttempt,
+  signInThrottle,
+} from "@/lib/auth-throttle";
 
 const credentialsSchema = z.object({
   email: z.string().trim().email(),
@@ -27,14 +33,35 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!parsed.success) return null;
 
         const { email, password } = parsed.data;
+        const normalizedEmail = email.toLowerCase();
+        const throttleKey = `signin:${normalizedEmail}`;
+
+        if (
+          await isThrottled(
+            throttleKey,
+            signInThrottle.limit,
+            signInThrottle.windowMinutes,
+          )
+        ) {
+          return null;
+        }
+
         const user = await prisma.user.findUnique({
-          where: { email: email.toLowerCase() },
+          where: { email: normalizedEmail },
         });
 
-        if (!user?.password) return null;
+        if (!user?.password) {
+          await recordAttempt(throttleKey);
+          return null;
+        }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
-        if (!isValidPassword) return null;
+        if (!isValidPassword) {
+          await recordAttempt(throttleKey);
+          return null;
+        }
+
+        await clearAttempts(throttleKey);
 
         return {
           id: user.id,
