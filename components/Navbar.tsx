@@ -7,19 +7,25 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
+import { useSession, signOut } from "next-auth/react";
 import { SKILL_TRACKS, MAIN_NAV_LINKS } from "@/lib/data";
+import { UserMenu } from "@/components/auth/UserMenu";
 import {
   ChevronDown,
   Menu,
   X,
   ArrowRight,
   Sparkles,
+  LayoutDashboard,
+  UserCircle,
+  LogOut,
 } from "lucide-react";
 
 export function Navbar() {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [tracksDropdownOpen, setTracksDropdownOpen] = useState(false);
+  const { data: session, status: sessionStatus } = useSession();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const hamburgerButtonRef = useRef<HTMLButtonElement>(null);
@@ -262,14 +268,25 @@ export function Navbar() {
         {/* Right CTA & Utilities */}
         <div className="hidden items-center space-x-3 md:flex">
           <ThemeToggle />
-          <Button
-            asChild
-            variant="accent"
-            size="sm"
-            className="font-semibold shadow-sm"
-          >
-            <Link href="/get-involved">Start Your Journey</Link>
-          </Button>
+          {sessionStatus === "authenticated" ? (
+            <UserMenu />
+          ) : (
+            <>
+              {sessionStatus !== "loading" && (
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/sign-in">Sign in</Link>
+                </Button>
+              )}
+              <Button
+                asChild
+                variant="accent"
+                size="sm"
+                className="font-semibold shadow-sm"
+              >
+                <Link href="/get-involved">Start Your Journey</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile controls */}
@@ -381,18 +398,81 @@ export function Navbar() {
             </nav>
 
             <div className="space-y-3 border-t border-border pt-4">
-              <Button
-                asChild
-                variant="accent"
-                size="lg"
-                className="w-full gap-2 font-semibold shadow-md"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Link href="/get-involved">
-                  <Sparkles className="h-4 w-4" aria-hidden="true" />
-                  Start Your Journey
-                </Link>
-              </Button>
+              {sessionStatus === "authenticated" ? (
+                <>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
+                    Account
+                  </p>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {session?.user?.email}
+                  </p>
+                  <Button
+                    asChild
+                    variant="accent"
+                    size="lg"
+                    className="w-full gap-2 font-semibold shadow-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Link href="/dashboard">
+                      <LayoutDashboard
+                        className="h-4 w-4"
+                        aria-hidden="true"
+                      />
+                      Dashboard
+                    </Link>
+                  </Button>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Link href="/account">
+                      <UserCircle className="h-4 w-4" aria-hidden="true" />
+                      Account
+                    </Link>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="w-full gap-2"
+                    onClick={() => signOut({ callbackUrl: "/" })}
+                  >
+                    <LogOut className="h-4 w-4" aria-hidden="true" />
+                    Sign out
+                  </Button>
+                </>
+              ) : (
+                <>
+                  {sessionStatus !== "loading" && (
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="lg"
+                      className="w-full gap-2"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      <Link href="/sign-in">
+                        <UserCircle className="h-4 w-4" aria-hidden="true" />
+                        Sign in
+                      </Link>
+                    </Button>
+                  )}
+                  <Button
+                    asChild
+                    variant="accent"
+                    size="lg"
+                    className="w-full gap-2 font-semibold shadow-md"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Link href="/get-involved">
+                      <Sparkles className="h-4 w-4" aria-hidden="true" />
+                      Start Your Journey
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

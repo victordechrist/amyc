@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AuthSessionProvider } from "@/components/SessionProvider";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
@@ -130,14 +131,16 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <a href="#main-content" className="skip-to-content">
-            Skip to main content
-          </a>
-          <Navbar />
-          <main id="main-content" className="flex-1">
-            {children}
-          </main>
-          <Footer />
+          <AuthSessionProvider>
+            <a href="#main-content" className="skip-to-content">
+              Skip to main content
+            </a>
+            <Navbar />
+            <main id="main-content" className="flex-1">
+              {children}
+            </main>
+            <Footer />
+          </AuthSessionProvider>
         </ThemeProvider>
       </body>
     </html>
