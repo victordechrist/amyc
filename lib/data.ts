@@ -15,7 +15,6 @@ export const MAIN_NAV_LINKS: NavItem[] = [
   { label: "Tracks", href: "/tracks" },
   { label: "Showcase", href: "/showcase" },
   { label: "Impact", href: "/impact" },
-  { label: "Resources", href: "/resources" },
   { label: "Get Involved", href: "/get-involved" },
   { label: "Contact", href: "/contact" },
 ];
@@ -26,7 +25,6 @@ export const FOOTER_NAV_LINKS = {
     { label: "Skill Tracks", href: "/tracks" },
     { label: "Project Showcase", href: "/showcase" },
     { label: "Certifications Prep", href: "/programs" },
-    { label: "Learning Resources", href: "/resources" },
   ],
   organization: [
     { label: "About AMYC", href: "/about" },
