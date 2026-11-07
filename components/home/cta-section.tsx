@@ -1,10 +1,16 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Heart, Sparkles } from "lucide-react";
 
-export function CTASection() {
+export async function CTASection() {
+  const session = await auth();
+  const journeyHref = session?.user
+    ? "/get-involved"
+    : "/sign-in?callbackUrl=%2Fget-involved";
+
   return (
     <Section
       padding="lg"
@@ -36,7 +42,7 @@ export function CTASection() {
             variant="accent"
             className="gap-2 font-semibold shadow-lg"
           >
-            <Link href="/get-involved">
+            <Link href={journeyHref}>
               Start Your Journey <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
