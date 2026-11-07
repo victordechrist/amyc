@@ -1,11 +1,12 @@
 import { Metadata } from "next";
+import Link from "next/link";
+import { Calendar, ArrowRight, Lock } from "lucide-react";
+import { auth } from "@/auth";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
 import { PROGRAM_OVERVIEW, UPCOMING_COHORTS } from "@/lib/data/programs";
 import { SKILL_TRACKS } from "@/lib/data/tracks";
-import Link from "next/link";
-import { Calendar, ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Programs & Cohorts | Adaobi Muonago Youth Center",
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
     "Explore our youth tech bootcamps, cohort model, certification preparation, and mentorship structure.",
 };
 
-export default function ProgramsPage() {
+export default async function ProgramsPage() {
+  const session = await auth();
+  const canViewPathways = Boolean(session?.user);
+
   return (
     <div className="flex flex-col gap-12 py-8 md:py-12">
       {/* Hero Section */}
@@ -63,14 +67,17 @@ export default function ProgramsPage() {
               Choose from 5 specialized tracks built for in-demand tech roles.
             </p>
           </div>
-          <Link
-            href="/tracks"
-            className="hidden items-center gap-1.5 text-xs font-semibold text-accent hover:underline sm:flex"
-          >
-            Detailed Track Hub <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          {canViewPathways && (
+            <Link
+              href="/tracks"
+              className="hidden items-center gap-1.5 text-xs font-semibold text-accent hover:underline sm:flex"
+            >
+              Detailed Track Hub <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+          )}
         </div>
 
+        {canViewPathways ? (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {SKILL_TRACKS.map((track) => {
             const Icon = track.icon;
@@ -107,6 +114,27 @@ export default function ProgramsPage() {
             );
           })}
         </div>
+        ) : (
+          <div className="flex flex-col items-center gap-4 rounded-xl border border-dashed border-border bg-muted/30 px-6 py-12 text-center">
+            <div className="rounded-full bg-accent/10 p-3 text-accent">
+              <Lock className="h-6 w-6" />
+            </div>
+            <div>
+              <h3 className="font-heading text-lg font-bold text-foreground">
+                Available Training Pathways are for members
+              </h3>
+              <p className="mt-1 max-w-md text-sm text-muted-foreground">
+                Sign in to your AMYC account to explore the 5 specialized
+                tracks, syllabi, and project details.
+              </p>
+            </div>
+            <Button asChild variant="accent">
+              <Link href="/sign-in?callbackUrl=%2Fprograms">
+                Sign in to view pathways
+              </Link>
+            </Button>
+          </div>
+        )}
       </Section>
 
       {/* Upcoming Cohorts Schedule */}
