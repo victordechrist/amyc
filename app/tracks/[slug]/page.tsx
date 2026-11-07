@@ -8,6 +8,7 @@ import { CurriculumOutline } from "@/components/track/CurriculumOutline";
 import { TrackProjects } from "@/components/track/TrackProjects";
 import { TrackOutcomes } from "@/components/track/TrackOutcomes";
 import { TrackResources } from "@/components/track/TrackResources";
+import { SyllabusContent } from "@/components/track/SyllabusContent";
 import { InterestForm } from "@/components/forms/InterestForm";
 
 interface TrackDetailProps {
@@ -62,7 +63,10 @@ export default function TrackDetailPage({ params }: TrackDetailProps) {
       {/* 7. Related Resources */}
       <TrackResources track={track} />
 
-      {/* 8. CTA / Interest Form Section */}
+      {/* 8. Full Course Syllabus */}
+      <SyllabusContent slug={track.slug} />
+
+      {/* 9. CTA / Interest Form Section */}
       <div id="enroll-form" className="scroll-mt-20 pt-4">
         <InterestForm
           defaultRole="student"
