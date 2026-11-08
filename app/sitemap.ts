@@ -1,16 +1,14 @@
 import { MetadataRoute } from "next";
-import { SKILL_TRACKS } from "@/lib/data";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://amyc.vercel.app";
 
+  // Auth-gated routes (/tracks, /showcase, /dashboard, /account) are excluded.
   const staticRoutes = [
     "",
     "/about",
     "/programs",
-    "/tracks",
     "/impact",
-    "/showcase",
     "/contact",
     "/get-involved",
     "/donate",
@@ -21,12 +19,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === "" ? 1.0 : 0.8,
   }));
 
-  const trackRoutes = SKILL_TRACKS.map((track) => ({
-    url: `${baseUrl}/tracks/${track.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "weekly" as const,
-    priority: 0.9,
-  }));
-
-  return [...staticRoutes, ...trackRoutes];
+  return staticRoutes;
 }
