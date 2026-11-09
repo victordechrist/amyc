@@ -36,12 +36,12 @@ export function Footer() {
               className="inline-flex items-center transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-md"
               aria-label="Adaobi Muonago Youth Center Home"
             >
-              <div className="relative h-16 w-16 overflow-hidden rounded-full shadow-sm">
+              <div className="relative h-32 w-32 overflow-hidden rounded-full shadow-sm">
                 <Image
                   src="/images/logo/amyc-logo-full.png"
                   alt="Adaobi Muonago Youth Center (AMYC) logo"
-                  width={64}
-                  height={64}
+                  width={128}
+                  height={128}
                   className="h-full w-full object-contain"
                 />
               </div>
