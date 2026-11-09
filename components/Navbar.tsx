@@ -126,19 +126,19 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
+      <div className="container mx-auto flex h-32 items-center justify-between px-4 md:px-6">
         {/* Logo */}
         <Link
           href="/"
           className="flex items-center gap-3 transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
           aria-label="Adaobi Muonago Youth Center Home"
         >
-          <div className="relative h-14 w-14 overflow-hidden rounded-full shadow-sm">
+          <div className="relative h-28 w-28 overflow-hidden rounded-full shadow-sm">
             <Image
               src="/images/logo/amyc-logo-full.png"
               alt="Adaobi Muonago Youth Center (AMYC) logo"
-              width={56}
-              height={56}
+              width={112}
+              height={112}
               className="h-full w-full object-contain"
               priority
             />
@@ -319,7 +319,7 @@ export function Navbar() {
         <div
           id="mobile-menu"
           ref={mobileMenuRef}
-          className="bg-background/98 animate-in slide-in-from-top-2 fixed inset-x-0 bottom-0 top-16 z-50 flex flex-col overflow-y-auto border-t border-border p-6 backdrop-blur-lg duration-200 md:hidden"
+          className="bg-background/98 animate-in slide-in-from-top-2 fixed inset-x-0 bottom-0 top-32 z-50 flex flex-col overflow-y-auto border-t border-border p-6 backdrop-blur-lg duration-200 md:hidden"
         >
           <div className="space-y-4">
             <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
